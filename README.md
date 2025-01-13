@@ -31,3 +31,16 @@ Display script version:
 ```powershell
 .\Get-WinGet.ps1 -Version
 ```
+
+## One liner
+Copy and paste this into powershell if you don't want to bother with downloading the script.
+
+Install for the current user:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force; Invoke-WebRequest -Uri https://raw.githubusercontent.com/776d/get-winget/main/Get-WinGet.ps1 -OutFile ${env:TEMP}\Get-WinGet.ps1; try { & "${env:TEMP}\Get-WinGet.ps1" -User } catch { "Get-WinGet failed." } finally { Get-ChildItem -Path $env:TEMP -Include @("Get-WinGet.ps1","get-winget") -Recurse | Remove-Item -Force }
+```
+
+Install for the machine:
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force; Invoke-WebRequest -Uri https://raw.githubusercontent.com/776d/get-winget/main/Get-WinGet.ps1 -OutFile ${env:TEMP}\Get-WinGet.ps1; try { & "${env:TEMP}\Get-WinGet.ps1" -Machine } catch { "Get-WinGet failed." } finally { Get-ChildItem -Path $env:TEMP -Include @("Get-WinGet.ps1","get-winget") -Recurse | Remove-Item -Force }
+```

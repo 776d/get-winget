@@ -8,7 +8,7 @@ param(
 $ProgressPreference = "SilentlyContinue"
 
 $scriptName = "$($MyInvocation.MyCommand.Name)"
-$scriptVersion = "1.1.0"
+$scriptVersion = "1.2.0"
 
 $wingetVer = "1.9.25200"
 $wingetLicenseHash = "7fdfd40ea2dc40deab85b69983e1d873"
@@ -20,7 +20,7 @@ $wingetDepsExtractedDir = "DesktopAppInstaller_Dependencies"
 $wingetFileName = "Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle"
 $wingetLicenseFileName = "License1.xml"
 
-$downloadDir = $env:TEMP
+$downloadDir = "${env:TEMP}\get-winget"
 $currentUser = $env:USERNAME
 
 function Show-Help {
@@ -36,6 +36,10 @@ function Show-Version {
 }
 
 function Get-Files {
+    if ((Test-Path -Path $downloadDir) -eq $false) {
+        New-Item -Path "${env:TEMP}" -Name "get-winget" -ItemType "directory" | Out-Null
+    }
+
     $retryCounter = 0
 
     $downloadedFiles = @(
@@ -66,11 +70,7 @@ function Get-Files {
 }
 
 function Remove-Files {
-    Remove-Item -Force -Recurse -Path `
-        $downloadDir\$wingetDepsFileName,
-        $downloadDir\$wingetDepsExtractedDir,
-        $downloadDir\$wingetFileName,
-        $downloadDir\$wingetLicenseFileName
+    Remove-Item -Force -Recurse -Path $downloadDir
 }
 
 function Install-CurrentUser {
