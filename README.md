@@ -33,7 +33,7 @@ Display script version:
 ```
 
 ## One liner
-Copy and paste this into powershell if you don't want to bother with downloading the script.
+Copy and paste this into powershell if you don't want to bother with downloading and running the script manually.
 
 Install for the current user:
 ```powershell
